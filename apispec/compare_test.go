@@ -120,7 +120,7 @@ func TestCompareLeavesItsInputsUnchanged(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := apispec.Compare(base, revision); err != nil {
+	if _, err = apispec.Compare(base, revision); err != nil {
 		t.Fatal(err)
 	}
 	after, err := revision.Canonical()
