@@ -1,0 +1,29 @@
+# The pet store.
+openapi: 3.0.3 # trailing comment
+info:
+  title: Pets
+  version: 1.0.0
+
+paths:
+  /pets:
+    get:
+      # Lists pets.
+      responses:
+        "200": &ok
+          description: OK
+
+
+  /owners:
+    get:
+      responses:
+        "200": *ok
+components:
+  schemas:
+    Base: &base
+      type: object
+      properties:
+        id:
+          type: string
+    Pet:
+      <<: *base
+      description: A pet, built on Base with a YAML merge key.

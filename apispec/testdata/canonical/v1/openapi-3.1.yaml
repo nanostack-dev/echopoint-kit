@@ -1,0 +1,38 @@
+webhooks:
+  petAdopted:
+    post:
+      responses:
+        "200":
+          description: Received.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+info:
+  summary: Pets, as OpenAPI 3.1.
+  license:
+    identifier: MIT
+    name: MIT
+  version: 1.0.0
+  title: Pets
+openapi: 3.1.0
+components:
+  schemas:
+    Pet:
+      $defs:
+        Tag:
+          type: string
+      examples:
+        - name: Rex
+      properties:
+        tags:
+          items:
+            $ref: "#/components/schemas/Pet/$defs/Tag"
+          type: array
+        name:
+          type:
+            - string
+            - "null"
+      type: object

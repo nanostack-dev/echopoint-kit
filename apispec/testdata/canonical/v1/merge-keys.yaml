@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: Pets
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Named: &named
+      type: object
+      description: Has a name.
+    Dated: &dated
+      format: date-time
+      description: Has a date.
+    Pet:
+      <<: [*named, *dated]
+      description: The own key wins over both merged ones.
+      zUnknownField: kept after the known fields
+      aUnknownField: sorted by name

@@ -1,0 +1,11 @@
+// Package apispec is the OpenAPI spec engine of Echopoint's API specs. The
+// API, the CLI, and the browser use it, so a document reads, compares, and
+// versions the same everywhere.
+//
+//   - Parse reads an OpenAPI 3.0.x or 3.1.x document and refuses Swagger 2.0,
+//     other versions, and external $ref. Validate checks it.
+//   - Canonical writes the canonical YAML layout EchoPoint stores and
+//     `spec pull` writes (ADR-0017). LayoutVersion names that layout.
+//   - Compare diffs two documents with oasdiff and computes the version bump.
+//   - Publish turns a document into the next Live version.
+package apispec

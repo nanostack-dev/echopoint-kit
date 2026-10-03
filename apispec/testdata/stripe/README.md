@@ -1,0 +1,1 @@
+`spec3.yaml.gz` is the public Stripe OpenAPI document (`openapi/spec3.yaml` of github.com/stripe/openapi, commit 2d691abcb499470ffd7536614b8901348697c8cf, MIT licensed), gzipped. It exercises the canonical layout at real-world size (6.6 MB). `spec3.canonical.sha256` is the SHA-256 of its canonical YAML.
