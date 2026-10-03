@@ -1,0 +1,97 @@
+components:
+  securitySchemes:
+    oauth:
+      flows:
+        authorizationCode:
+          scopes:
+            write: Write pets
+            read: Read pets
+          tokenUrl: https://example.com/token
+          authorizationUrl: https://example.com/authorize
+      description: OAuth 2
+      type: oauth2
+  schemas:
+    Pet:
+      x-entity: pet
+      example:
+        name: Rex
+        id: "1"
+      properties:
+        name:
+          maxLength: 64
+          description: The pet's name.
+          type: string
+        id:
+          readOnly: true
+          format: uuid
+          type: string
+      required:
+        - name
+      description: A pet.
+      type: object
+    Error:
+      properties:
+        message:
+          type: string
+      type: object
+  parameters:
+    PetId:
+      schema:
+        type: string
+      required: true
+      in: path
+      name: id
+  responses:
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Not found.
+tags:
+  - description: Everything about pets.
+    name: pets
+security:
+  - oauth:
+      - read
+servers:
+  - variables:
+      region:
+        description: Region.
+        default: eu
+        enum:
+          - eu
+          - us
+    description: Production
+    url: https://{region}.example.com
+paths:
+  x-paths-extension: true
+  /pets/{id}:
+    parameters:
+      - $ref: "#/components/parameters/PetId"
+    delete:
+      responses:
+        "204":
+          description: Deleted.
+      operationId: deletePet
+    get:
+      responses:
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+          description: The pet.
+      operationId: getPet
+      summary: Get a pet
+      tags:
+        - pets
+info:
+  version: 1.0.0
+  license:
+    name: MIT
+  title: Pets
+  x-logo: logo.png
+openapi: 3.0.3

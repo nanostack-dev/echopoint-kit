@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: Pets
+  license:
+    name: MIT
+  version: 1.0.0
+  x-logo: logo.png
+servers:
+  - url: https://{region}.example.com
+    description: Production
+    variables:
+      region:
+        enum:
+          - eu
+          - us
+        default: eu
+        description: Region.
+paths:
+  x-paths-extension: true
+  /pets/{id}:
+    parameters:
+      - $ref: '#/components/parameters/PetId'
+    get:
+      tags:
+        - pets
+      summary: Get a pet
+      operationId: getPet
+      responses:
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "200":
+          description: The pet.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+    delete:
+      operationId: deletePet
+      responses:
+        "204":
+          description: Deleted.
+components:
+  schemas:
+    Pet:
+      description: A pet.
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          description: The pet's name.
+          type: string
+          maxLength: 64
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+      example:
+        name: Rex
+        id: "1"
+      x-entity: pet
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+  responses:
+    NotFound:
+      description: Not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    PetId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    oauth:
+      type: oauth2
+      description: OAuth 2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/authorize
+          tokenUrl: https://example.com/token
+          scopes:
+            write: Write pets
+            read: Read pets
+security:
+  - oauth:
+      - read
+tags:
+  - name: pets
+    description: Everything about pets.

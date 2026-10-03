@@ -1,0 +1,25 @@
+openapi: '3.0.3'
+info:
+  title: "Pets"
+  version: '2.0'
+  description: "First line.\nSecond line.\n"
+paths:
+  /pets:
+    get:
+      parameters:
+        - name: limit
+          in: query
+          required: False
+          schema:
+            type: integer
+            default: 20
+            maximum: 1.0e+2
+            nullable: ~
+      responses:
+        200:
+          description: >
+            Folded text
+            on two lines.
+          content:
+            application/json:
+              example: {count: 1, "on": "yes", empty: [], nothing: {}, date: 2026-10-03}
