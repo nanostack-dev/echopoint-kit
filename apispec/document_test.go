@@ -2,6 +2,7 @@ package apispec_test
 
 import (
 	"errors"
+	"strings"
 	"testing"
 
 	"github.com/nanostack-dev/echopoint-kit/apispec"
@@ -170,4 +171,58 @@ func mustParse(t *testing.T, yaml string) *apispec.Document {
 		t.Fatalf("Parse() = %v", err)
 	}
 	return document
+}
+
+func TestParseRefusesNonObjectRoot(t *testing.T) {
+	_, err := apispec.Parse([]byte("- openapi\n- 3.0.3\n"))
+	if !errors.Is(err, apispec.ErrInvalid) {
+		t.Errorf("Parse() error = %v, want ErrInvalid", err)
+	}
+}
+
+func TestParseRefusesEmptyInput(t *testing.T) {
+	_, err := apispec.Parse(nil)
+	if !errors.Is(err, apispec.ErrUnreadable) {
+		t.Errorf("Parse() error = %v, want ErrUnreadable", err)
+	}
+}
+
+func TestParseReportsTheYAMLProblemOnly(t *testing.T) {
+	_, err := apispec.Parse([]byte(edit(petsSpec, "version: 1.0.0", "version: 1.0")))
+	var validationError *apispec.ValidationError
+	if !errors.As(err, &validationError) {
+		t.Fatalf("Parse() error = %v, want a ValidationError", err)
+	}
+	if problem := validationError.Problems[0]; strings.Contains(problem, "json error") || problem == "" {
+		t.Errorf("problem = %q", problem)
+	}
+}
+
+func TestErrorMessagesNameWhatIsWrong(t *testing.T) {
+	refError := &apispec.ExternalRefError{Refs: []apispec.ExternalRef{{Pointer: "/paths/~1a/$ref", Ref: "a.yaml"}}}
+	if !strings.Contains(refError.Error(), "/paths/~1a/$ref -> a.yaml") {
+		t.Errorf("ExternalRefError = %q", refError.Error())
+	}
+	validationError := &apispec.ValidationError{Problems: []string{"info.title is required", "paths is required"}}
+	if !strings.Contains(validationError.Error(), "info.title is required; paths is required") {
+		t.Errorf("ValidationError = %q", validationError.Error())
+	}
+}
+
+func TestTitleAndVersionReadInfo(t *testing.T) {
+	document := mustParse(t, petsSpec)
+	if document.Title() != "Pets" || document.Version() != "1.0.0" {
+		t.Errorf("Title() = %q, Version() = %q", document.Title(), document.Version())
+	}
+}
+
+func TestWithVersionWritesAMissingInfoVersion(t *testing.T) {
+	document := mustParse(t, edit(petsSpec, "  version: 1.0.0\n", ""))
+	canonical, err := document.WithVersion("1.0.0").Canonical()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(canonical), "  version: 1.0.0\n") {
+		t.Errorf("canonical YAML has no info.version:\n%s", canonical)
+	}
 }
