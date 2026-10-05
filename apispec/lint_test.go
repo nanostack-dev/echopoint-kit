@@ -112,6 +112,15 @@ func TestLintPropertyCasing(t *testing.T) {
 		wantPointers(t, lintFindings(t, document, apispec.RulePropertyCasing), "/paths/~1r0/get/parameters/0")
 	})
 
+	t.Run("path, header, and cookie parameter names follow their own conventions", func(t *testing.T) {
+		document := mustParse(t, lintSpec(1, func(int) string {
+			return "parameters:\n" +
+				"  - name: Idempotency-Key\n    in: header\n    schema:\n      type: string\n" +
+				"  - name: session_id\n    in: cookie\n    schema:\n      type: string\n" + lintOKResponse
+		}, lintSchema("Pet", "petName", "petAge", "ownerId", "createdAt", "updatedAt")))
+		wantPointers(t, lintFindings(t, document, apispec.RulePropertyCasing))
+	})
+
 	t.Run("no finding without a casing held by 80% of the properties", func(t *testing.T) {
 		document := mustParse(t, lintSpec(0, nil,
 			lintSchema("Pet", "petName", "petAge", "ownerId", "created_at", "updated_at", "birth_date")))

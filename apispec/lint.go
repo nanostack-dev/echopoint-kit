@@ -205,8 +205,9 @@ func (b *baseline) lintProperty(property propertyRecord) []Finding {
 }
 
 func (b *baseline) lintParameter(parameter lintNode) []Finding {
+	location, _ := stringValue(lookup(parameter.node, "in"))
 	name, isString := stringValue(lookup(parameter.node, "name"))
-	if !isString || b.propertyCasing == nil || !b.propertyCasing.departs(name) {
+	if location != "query" || !isString || b.propertyCasing == nil || !b.propertyCasing.departs(name) {
 		return nil
 	}
 	return []Finding{b.propertyCasing.finding(
