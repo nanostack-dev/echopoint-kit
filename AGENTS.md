@@ -6,6 +6,8 @@ Shared Go packages for Echopoint, public so the public `echopoint-cli` can impor
 
 - `apispec`: the OpenAPI spec engine of API specs (`nanostack-dev/echopoint#433`): parse and validate, the canonical YAML layout (ADR-0017 in echopoint), comparison with oasdiff, the version bump, and `Edit`, the granular edit commands.
 
+- `apispec/bridge`: apispec as one JSON-in, JSON-out call (`lint`, `lint_changes`, `compare`, `edit`, `canonical`), with the Echopoint API's error codes. `cmd/apispec-wasm` exposes it to JavaScript as `globalThis.apispecHandle`; Echopoint's editor worker runs it.
+
 ## Invariants
 
 - Nothing Echopoint-private goes here: no echopoint domain types, database, HTTP, or credentials. A package here must make sense to any OpenAPI tool.
@@ -19,9 +21,9 @@ Shared Go packages for Echopoint, public so the public `echopoint-cli` can impor
 
 ## Commands
 
-- Test: `go test -race ./...` (`-short` skips the 6.6 MB Stripe document). Lint: `golangci-lint run --path-mode=abs`.
+- Test: `go test -race ./...` (the WebAssembly parity test in `cmd/apispec-wasm` needs `node`; it is skipped without it) (`-short` skips the 6.6 MB Stripe document). Lint: `golangci-lint run --path-mode=abs`.
 - Regenerate goldens of the current layout version: `go test ./apispec -run Canonical -update`. Review the diff: an unexpected change means `LayoutVersion` must move.
 
 ## Releases
 
-- `.github/workflows/release.yml` tags the next minor on every push to `main`. Then bump consumers: `go get github.com/nanostack-dev/echopoint-kit@vX.Y.0 && go mod tidy` in `../echopoint` and `../echopoint-cli`.
+- `.github/workflows/release.yml` tags the next minor on every push to `main`, then publishes a GitHub release with `apispec.wasm.gz`, the matching `wasm_exec.js`, and `SHA256SUMS`. Echopoint's frontend downloads the release that matches the `echopoint-kit` version in echopoint's `go.mod`, so bumping the module there also moves the browser. Then bump consumers: `go get github.com/nanostack-dev/echopoint-kit@vX.Y.0 && go mod tidy` in `../echopoint` and `../echopoint-cli`.

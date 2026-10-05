@@ -13,4 +13,7 @@
 //   - Lint reports the nodes that depart from the conventions the document itself follows,
 //     and LintChanges only those a change introduces, judged by the conventions of the base.
 //   - Publish turns a document into the next Live version.
+//
+// Package bridge wraps these calls as JSON for the WebAssembly build in
+// cmd/apispec-wasm, so the browser answers exactly like the server.
 package apispec

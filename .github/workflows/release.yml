@@ -15,6 +15,8 @@ concurrency:
 jobs:
   tag:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version.outputs.next_tag }}
     timeout-minutes: 5
     steps:
       - name: Checkout
@@ -40,3 +42,39 @@ jobs:
         run: |
           git tag "${{ steps.version.outputs.next_tag }}"
           git push origin "${{ steps.version.outputs.next_tag }}"
+
+  # The browser's copy of the engine (cmd/apispec-wasm). wasm_exec.js comes from
+  # the same Go toolchain, because the two must match. The binary ships gzipped:
+  # raw it is close to Cloudflare's 25 MiB static file limit.
+  webassembly:
+    needs: tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.tag.outputs.tag }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+          cache-dependency-path: go.sum
+
+      - name: Build
+        run: |
+          mkdir -p dist
+          GOOS=js GOARCH=wasm go build -trimpath -ldflags="-s -w" -o dist/apispec.wasm ./cmd/apispec-wasm
+          gzip -9 -n dist/apispec.wasm
+          cp "$(go env GOROOT)/lib/wasm/wasm_exec.js" dist/wasm_exec.js
+          (cd dist && sha256sum apispec.wasm.gz wasm_exec.js > SHA256SUMS)
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.tag.outputs.tag }}
+        run: |
+          gh release create "$TAG" dist/apispec.wasm.gz dist/wasm_exec.js dist/SHA256SUMS \
+            --title "$TAG" --notes "apispec $TAG. apispec.wasm.gz is the WebAssembly build of cmd/apispec-wasm; run it with the wasm_exec.js beside it."
