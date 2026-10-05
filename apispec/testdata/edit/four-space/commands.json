@@ -1,5 +1,5 @@
 [
-  {"kind": "add_operation", "path": "/pets", "method": "post", "summary": "Create a pet", "tags": ["pets", "write"]},
+  {"kind": "add_operation", "path": "/pets", "method": "post", "summary": "Create a pet", "tags": ["pets", "write"], "status": "201"},
   {"kind": "add_property", "pointer": "/components/schemas/Pet", "name": "tags", "type": "array", "required": true},
   {"kind": "set_enum", "pointer": "/components/schemas/Pet/properties/name", "values": ["rex", "fido"]},
   {"kind": "add_response", "pointer": "/paths/~1owners/get", "status": "500", "type": "string"},

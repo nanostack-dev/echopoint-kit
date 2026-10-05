@@ -171,7 +171,7 @@ func (c Command) invalid() string {
 		CommandSetTags, CommandRemoveResponse:
 		return c.needPointer()
 	case CommandAddOperation:
-		return firstReason(c.checkPath(), c.checkMethod())
+		return firstReason(c.checkPath(), c.checkMethod(), c.checkOptionalStatus())
 	case CommandAddSchema:
 		return firstReason(c.checkSchemaName(), c.checkOptionalType())
 	case CommandRemoveSchema:
@@ -300,6 +300,13 @@ func (c Command) checkStatus() string {
 		return fmt.Sprintf("status must be a status code, a range such as 4XX, or default, not %q", c.Status)
 	}
 	return ""
+}
+
+func (c Command) checkOptionalStatus() string {
+	if c.Status == "" {
+		return ""
+	}
+	return c.checkStatus()
 }
 
 func (c Command) checkBody() string {

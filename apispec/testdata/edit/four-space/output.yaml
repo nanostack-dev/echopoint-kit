@@ -16,8 +16,8 @@ paths:
                 - write
             summary: Create a pet
             responses:
-                "200":
-                    description: OK
+                "201":
+                    description: Created
 components:
     schemas:
         Pet:

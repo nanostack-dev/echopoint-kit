@@ -199,8 +199,12 @@ func (e *editor) addOperation() error {
 	if parameters := e.undeclaredPathParameters(item, c.Path); len(parameters) > 0 {
 		e.put(operation, kindOperation, "parameters", newSeqNode(parameters...))
 	}
+	status := c.Status
+	if status == "" {
+		status = "200"
+	}
 	responses := newMapNode()
-	appendPair(responses, e.statusKey(responses, "200"), e.newResponse("OK"))
+	appendPair(responses, e.statusKey(responses, status), e.newResponse(defaultResponseDescription(status)))
 	e.put(operation, kindOperation, "responses", responses)
 	e.put(item, kindPathItem, method, operation)
 	return nil

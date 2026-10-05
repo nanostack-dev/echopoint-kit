@@ -7,6 +7,11 @@
 +                - pets
 +                - write
 +            summary: Create a pet
+@@ -17 +19 @@
+-                "200":
+-                    description: OK
++                "201":
++                    description: Created
 @@ -23 +25 @@
 +            required:
 +                - tags
