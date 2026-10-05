@@ -13,6 +13,7 @@ Shared Go packages for Echopoint, public so the public `echopoint-cli` can impor
 - The bump table lives in `apispec/version.go` and `severityOf` in `apispec/compare.go`; each row has its own test in `apispec/publish_test.go`.
 - A comparison that fails returns `ErrComparisonFailed`, never an empty comparison.
 - oasdiff and kin-openapi are pinned; a bump can change diffs and the canonical layout, so run the Stripe golden test before merging one.
+- Lint rule IDs (`apispec.Rule*`, such as `property-casing`) are a stored and shared contract: the server stores findings and the browser runs this same code, so renaming a rule ID is a breaking change. Conventions are derived from the document itself and every threshold (80% majority, 70% for property descriptions, 3-operation tag baseline) is ported from the prototype in echopoint `features/api-specs/engine/lint.ts`.
 - Avoid comments — name variables and functions clearly instead. Comment only a genuinely complex algorithm.
 
 ## Commands
