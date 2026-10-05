@@ -1,0 +1,98 @@
+# Pet store API.
+# Owned by the platform team.
+openapi: 3.0.3
+info:
+  title: Pet store # shown in the docs
+  version: "1.0.0"
+  description: |
+    A store of pets.
+
+    Second paragraph stays.
+paths:
+  # Listing endpoints.
+  /pets:
+    get:
+      summary: List pets # keep this
+      operationId: listPets
+      tags:
+        - pets
+        - public
+      parameters:
+        - name: limit
+          in: query
+          description: 'How many, "max" 100'
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A list of pets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+    # A comment about post.
+    delete:
+      summary: Delete all pets
+      responses:
+        "200":
+          description: OK
+
+  /owners/{ownerId}:
+    get:
+      tags:
+        - owners
+      summary: Get an owner
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+    post:
+      description: Adds to an owner
+      parameters:
+        - name: ownerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /pets/{petId}:
+    get:
+      tags:
+        - pets
+      summary: Get a pet
+      operationId: getPet
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+# Footer of paths.
+
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string # the name
+        age:
+          type: integer
+# The end.

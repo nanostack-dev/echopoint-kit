@@ -1,0 +1,22 @@
+@@ -15 +15 @@
+-      summary: List pets # keep this
+-      operationId: listPets
++      summary: List all pets # keep this
++      operationId: listAllPets
+@@ -22 +22 @@
+-          description: 'How many, "max" 100'
+@@ -33 +32 @@
+-    post:
++    put:
+@@ -38 +37 @@
+-        Needs a name.
++        Needs a name and an age.
+@@ -44 +43 @@
+-  /owners/{ownerId}:
++  /owners/{id}:
+@@ -47 +46 @@
++      description: 'Reads one owner: it has a "quote".'
+@@ -55 +55 @@
++      description: A pet
+@@ -62 +63 @@
++          description: Age in years

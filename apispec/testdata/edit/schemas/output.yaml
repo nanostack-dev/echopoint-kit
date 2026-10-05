@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: Schemas
+  version: 1.0.0
+components:
+  schemas:
+    # The pet.
+    Pet:
+      type: object
+      required: [petName, nickname]
+      properties:
+        petName:
+          type: string
+        age:
+          type: [integer, "null"] # whole years
+          format: int32
+        nickname:
+          type: [string, "null"]
+        status:
+          type: string
+          enum:
+            - available
+            - pending
+            - sold
+        owner:
+          $ref: '#/components/schemas/Legacy'
+          description: Who owns it
+
+    Owner:
+      type: object
+      required:
+        - email
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+
+    Legacy:
+      type: object
+      properties: {}
+
+    Tag:
+      description: A tag
+      type: object
+    Count:
+      type: integer

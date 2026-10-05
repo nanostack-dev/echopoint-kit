@@ -1,0 +1,63 @@
+# Pet store API.
+# Owned by the platform team.
+openapi: 3.0.3
+info:
+  title: Pet store # shown in the docs
+  version: "1.0.0"
+  description: |
+    A store of pets.
+
+    Second paragraph stays.
+paths:
+  # Listing endpoints.
+  /pets:
+    get:
+      summary: List pets # keep this
+      operationId: listPets
+      tags:
+        - pets
+      parameters:
+        - name: limit
+          in: query
+          description: 'How many, "max" 100'
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+    # A comment about post.
+    post:
+      summary: Create a pet
+      description: |
+        Creates a pet.
+
+        Needs a name.
+      operationId: createPet
+      responses:
+        "201":
+          description: Created
+
+  /owners/{ownerId}:
+    get:
+      summary: Get an owner
+      responses:
+        "200":
+          description: OK
+# Footer of paths.
+
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string # the name
+        age:
+          type: integer
+# The end.

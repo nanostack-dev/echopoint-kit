@@ -1,0 +1,13 @@
+[
+  {"kind": "add_operation", "path": "/pets/{petId}", "method": "get", "operation_id": "getPet", "summary": "Get a pet", "tags": ["pets"]},
+  {"kind": "add_operation", "path": "/pets", "method": "delete", "summary": "Delete all pets"},
+  {"kind": "add_operation", "path": "/owners/{ownerId}", "method": "post", "description": "Adds to an owner"},
+  {"kind": "remove_operation", "pointer": "/paths/~1pets/post"},
+  {"kind": "set_tags", "pointer": "/paths/~1pets/get", "tags": ["pets", "public"]},
+  {"kind": "set_tags", "pointer": "/paths/~1owners~1{ownerId}/get", "tags": ["owners"]},
+  {"kind": "add_response", "pointer": "/paths/~1pets/get", "status": "404"},
+  {"kind": "add_response", "pointer": "/paths/~1pets/get", "status": "default", "description": "Unexpected error", "schema": "Pet"},
+  {"kind": "set_response", "pointer": "/paths/~1pets/get/responses/200", "description": "A list of pets"},
+  {"kind": "set_response", "pointer": "/paths/~1owners~1{ownerId}/get/responses/200", "type": "string"},
+  {"kind": "remove_response", "pointer": "/paths/~1pets/get/responses/404"}
+]

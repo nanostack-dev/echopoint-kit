@@ -1,0 +1,7 @@
+[
+  {"kind": "set_text", "pointer": "/paths/~1pets/get", "field": "summary", "value": "List \"all\" pets <fast>"},
+  {"kind": "add_operation", "path": "/pets", "method": "post", "summary": "Create a pet"},
+  {"kind": "rename_property", "pointer": "/components/schemas/Pet/properties/name", "name": "petName"},
+  {"kind": "set_type", "pointer": "/components/schemas/Pet/properties/weight", "type": "number", "nullable": true},
+  {"kind": "add_property", "pointer": "/components/schemas/Pet", "name": "tags", "type": "array"}
+]

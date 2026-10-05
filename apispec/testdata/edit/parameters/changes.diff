@@ -1,0 +1,25 @@
+@@ -15 +15 @@
+-        - name: expand
+-          in: query
+-          schema:
+-            type: string
+-        - name: limit
++        - name: include
+@@ -21 +17 @@
++          description: What to include
+@@ -22 +19 @@
+-          description: How many
+@@ -25 +21 @@
++            format: int64
++            nullable: true
++        - name: X-Trace
++          in: header
++          description: Trace id
++          schema:
++            type: string
+@@ -29 +32 @@
++      parameters:
++        - name: force
++          in: query
++          schema:
++            type: boolean

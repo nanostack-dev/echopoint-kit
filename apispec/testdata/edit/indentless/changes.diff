@@ -1,0 +1,16 @@
+@@ -11 +11 @@
++      - public
+@@ -16 +17 @@
++      - name: offset
++        in: query
++        schema:
++          type: integer
+@@ -24 +29 @@
+-      - name
+-      - age
++        - kind
+@@ -29 +33 @@
+-        age:
+-          type: integer
+@@ -36 +38 @@
++          - bird

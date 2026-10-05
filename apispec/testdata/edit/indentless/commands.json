@@ -1,0 +1,8 @@
+[
+  {"kind": "set_tags", "pointer": "/paths/~1pets/get", "tags": ["pets", "animals", "public"]},
+  {"kind": "add_parameter", "pointer": "/paths/~1pets/get", "name": "offset", "in": "query", "type": "integer"},
+  {"kind": "set_required", "pointer": "/components/schemas/Pet/properties/kind", "required": true},
+  {"kind": "set_required", "pointer": "/components/schemas/Pet/properties/name", "required": false},
+  {"kind": "set_enum", "pointer": "/components/schemas/Pet/properties/kind", "values": ["cat", "dog", "bird"]},
+  {"kind": "remove_property", "pointer": "/components/schemas/Pet/properties/age"}
+]

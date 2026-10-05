@@ -1,0 +1,11 @@
+[
+  {"kind": "set_parameter_field", "pointer": "/paths/~1pets~1{petId}/get/parameters/0", "field": "name", "value": "include"},
+  {"kind": "set_parameter_field", "pointer": "/paths/~1pets~1{petId}/get/parameters/0", "field": "description", "value": "What to include"},
+  {"kind": "set_parameter_field", "pointer": "/paths/~1pets~1{petId}/get/parameters/1", "field": "in", "value": "header"},
+  {"kind": "set_parameter_required", "pointer": "/paths/~1pets~1{petId}/get/parameters/1", "required": false},
+  {"kind": "set_parameter_required", "pointer": "/paths/~1pets~1{petId}/get/parameters/0", "required": true},
+  {"kind": "set_parameter_type", "pointer": "/paths/~1pets~1{petId}/get/parameters/0", "type": "integer", "format": "int64", "nullable": true},
+  {"kind": "add_parameter", "pointer": "/paths/~1pets~1{petId}/delete", "name": "force", "in": "query", "type": "boolean"},
+  {"kind": "add_parameter", "pointer": "/paths/~1pets~1{petId}/get", "name": "X-Trace", "in": "header", "description": "Trace id"},
+  {"kind": "remove_parameter", "pointer": "/paths/~1pets~1{petId}/get/parameters/1"}
+]

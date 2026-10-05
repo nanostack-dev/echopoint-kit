@@ -4,12 +4,13 @@ Shared Go packages for Echopoint, public so the public `echopoint-cli` can impor
 
 ## Packages
 
-- `apispec`: the OpenAPI spec engine of API specs (`nanostack-dev/echopoint#433`): parse and validate, the canonical YAML layout (ADR-0017 in echopoint), comparison with oasdiff, and the version bump.
+- `apispec`: the OpenAPI spec engine of API specs (`nanostack-dev/echopoint#433`): parse and validate, the canonical YAML layout (ADR-0017 in echopoint), comparison with oasdiff, the version bump, and `Edit`, the granular edit commands.
 
 ## Invariants
 
 - Nothing Echopoint-private goes here: no echopoint domain types, database, HTTP, or credentials. A package here must make sense to any OpenAPI tool.
 - The canonical layout is a stored format. Any change to `Canonical` output, even one byte for one document, bumps `apispec.LayoutVersion` and adds goldens under `apispec/testdata/canonical/v<N>/`; the old directory stays until no Live version uses it.
+- `apispec.Edit` splices into the original bytes: every byte a command does not touch stays identical (comments, key order, blank lines, quoting). Do not replace the splice with a whole-document encode; the diff-based goldens in `apispec/testdata/edit/<case>/{input.yaml|input.json,commands.json,output.*,changes.diff}` fail when untouched lines move. Regenerate them with `go test ./apispec -run Edit -update` and review `changes.diff`.
 - The bump table lives in `apispec/version.go` and `severityOf` in `apispec/compare.go`; each row has its own test in `apispec/publish_test.go`.
 - A comparison that fails returns `ErrComparisonFailed`, never an empty comparison.
 - oasdiff and kin-openapi are pinned; a bump can change diffs and the canonical layout, so run the Stripe golden test before merging one.

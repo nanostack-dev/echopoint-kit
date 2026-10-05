@@ -1,0 +1,41 @@
+openapi: 3.1.0
+info:
+  title: Schemas
+  version: 1.0.0
+components:
+  schemas:
+    # The pet.
+    Pet:
+      type: object
+      required: [name, age]
+      properties:
+        name:
+          type: string
+        age:
+          type: integer # whole years
+        nickname:
+          type: string
+        status:
+          type: string
+          enum:
+            - available
+            - sold
+        owner:
+          $ref: '#/components/schemas/Owner'
+          description: Who owns it
+
+    Owner:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+
+    Unused:
+      type: object
+
+    Legacy:
+      type: object
+      properties:
+        name:
+          type: string
