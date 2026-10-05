@@ -1,0 +1,40 @@
+@@ -10 +10 @@
+-      required: [name, age]
++      required: [petName, nickname]
+@@ -12 +12 @@
+-        name:
++        petName:
+@@ -15 +15 @@
+-          type: integer # whole years
++          type: [integer, "null"] # whole years
++          format: int32
+@@ -17 +18 @@
+-          type: string
++          type: [string, "null"]
+@@ -22 +23 @@
++            - pending
+@@ -24 +26 @@
+-          $ref: '#/components/schemas/Owner'
++          $ref: '#/components/schemas/Legacy'
+@@ -29 +31 @@
++      required:
++        - email
+@@ -33 +37 @@
++        email:
++          type: string
++          format: email
+@@ -34 +41 @@
+-    Unused:
++    Legacy:
+@@ -36 +43 @@
++      properties: {}
+@@ -37 +45 @@
+-    Legacy:
++    Tag:
++      description: A tag
+@@ -39 +48 @@
+-      properties:
+-        name:
+-          type: string
++    Count:
++      type: integer

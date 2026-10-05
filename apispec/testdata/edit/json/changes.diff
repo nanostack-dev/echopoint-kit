@@ -1,0 +1,21 @@
+@@ -10 +10 @@
+-                "summary": "List pets",
++                "summary": "List \"all\" pets <fast>",
+@@ -16 +16 @@
++            },
++            "post": {
++                "summary": "Create a pet",
++                "responses": {
++                    "200": {
++                        "description": "OK"
++                    }
++                }
+@@ -24 +32 @@
+-                    "name": {
++                    "petName": {
+@@ -29 +37 @@
++                        "nullable": true,
+@@ -30 +39 @@
++                    },
++                    "tags": {
++                        "type": "array"

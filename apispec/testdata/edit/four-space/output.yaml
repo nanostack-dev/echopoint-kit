@@ -1,0 +1,34 @@
+# Four-space file.
+openapi: 3.0.3
+info:
+    title: Four
+    version: 1.0.0
+paths:
+    /pets:
+        get:
+            summary: List pets
+            responses:
+                "200":
+                    description: OK
+        post:
+            tags:
+                - pets
+                - write
+            summary: Create a pet
+            responses:
+                "200":
+                    description: OK
+components:
+    schemas:
+        Pet:
+            type: object
+            required:
+                - tags
+            properties:
+                name:
+                    type: string
+                    enum:
+                        - rex
+                        - fido
+                tags:
+                    type: array

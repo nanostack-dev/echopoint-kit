@@ -1,0 +1,62 @@
+@@ -19 +19 @@
++        - public
+@@ -27 +28 @@
+-          description: OK
++          description: A list of pets
+@@ -32 +33 @@
++        default:
++          description: Unexpected error
++          content:
++            application/json:
++              schema:
++                $ref: '#/components/schemas/Pet'
+@@ -33 +40 @@
+-    post:
+-      summary: Create a pet
+-      description: |
+-        Creates a pet.
+-
+-        Needs a name.
+-      operationId: createPet
++    delete:
++      summary: Delete all pets
+@@ -41 +43 @@
+-        "201":
+-          description: Created
++        "200":
++          description: OK
+@@ -46 +48 @@
++      tags:
++        - owners
+@@ -47 +51 @@
++      responses:
++        "200":
++          description: OK
++          content:
++            application/json:
++              schema:
++                type: string
++    post:
++      description: Adds to an owner
++      parameters:
++        - name: ownerId
++          in: path
++          required: true
++          schema:
++            type: string
++      responses:
++        "200":
++          description: OK
++
++  /pets/{petId}:
++    get:
++      tags:
++        - pets
++      summary: Get a pet
++      operationId: getPet
++      parameters:
++        - name: petId
++          in: path
++          required: true
++          schema:
++            type: string

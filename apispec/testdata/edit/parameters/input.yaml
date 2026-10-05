@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: Parameters
+  version: 1.0.0
+paths:
+  /pets/{petId}:
+    parameters:
+      - name: petId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      parameters:
+        - name: expand
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: true
+          description: How many
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+    delete:
+      responses:
+        "204":
+          description: Gone

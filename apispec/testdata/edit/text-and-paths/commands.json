@@ -1,0 +1,11 @@
+[
+  {"kind": "set_text", "pointer": "/paths/~1pets/get", "field": "summary", "value": "List all pets"},
+  {"kind": "set_text", "pointer": "/paths/~1pets/post", "field": "description", "value": "Creates a pet.\n\nNeeds a name and an age.\n"},
+  {"kind": "set_text", "pointer": "/paths/~1pets/get", "field": "operation_id", "value": "listAllPets"},
+  {"kind": "set_text", "pointer": "/paths/~1owners~1{ownerId}/get", "field": "description", "value": "Reads one owner: it has a \"quote\"."},
+  {"kind": "set_text", "pointer": "/components/schemas/Pet/properties/age", "field": "description", "value": "Age in years"},
+  {"kind": "set_text", "pointer": "/components/schemas/Pet", "field": "description", "value": "A pet"},
+  {"kind": "set_text", "pointer": "#/paths/~1pets/get/parameters/0", "field": "description", "value": ""},
+  {"kind": "rename_path", "pointer": "/paths/~1owners~1{ownerId}", "path": "/owners/{id}"},
+  {"kind": "set_method", "pointer": "/paths/~1pets/post", "method": "put"}
+]

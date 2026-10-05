@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Indentless
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      tags:
+      - pets
+      - animals
+      - public
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - kind
+      properties:
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - cat
+          - dog
+          - bird

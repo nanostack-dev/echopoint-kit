@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: Parameters
+  version: 1.0.0
+paths:
+  /pets/{petId}:
+    parameters:
+      - name: petId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      parameters:
+        - name: include
+          in: query
+          description: What to include
+          required: true
+          schema:
+            type: integer
+            format: int64
+            nullable: true
+        - name: X-Trace
+          in: header
+          description: Trace id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    delete:
+      parameters:
+        - name: force
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "204":
+          description: Gone

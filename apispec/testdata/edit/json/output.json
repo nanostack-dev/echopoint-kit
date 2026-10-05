@@ -1,0 +1,47 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Json",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/pets": {
+            "get": {
+                "summary": "List \"all\" pets <fast>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a pet",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Pet": {
+                "type": "object",
+                "properties": {
+                    "petName": {
+                        "type": "string"
+                    },
+                    "weight": {
+                        "type": "number",
+                        "nullable": true,
+                        "example": 4.5
+                    },
+                    "tags": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    }
+}

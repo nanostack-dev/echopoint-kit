@@ -1,0 +1,15 @@
+[
+  {"kind": "rename_property", "pointer": "/components/schemas/Pet/properties/name", "name": "petName"},
+  {"kind": "set_type", "pointer": "/components/schemas/Pet/properties/age", "type": "integer", "format": "int32", "nullable": true},
+  {"kind": "set_type", "pointer": "/components/schemas/Pet/properties/nickname", "type": "string", "nullable": true},
+  {"kind": "set_ref", "pointer": "/components/schemas/Pet/properties/owner", "schema": "Legacy"},
+  {"kind": "set_required", "pointer": "/components/schemas/Pet/properties/nickname", "required": true},
+  {"kind": "set_required", "pointer": "/components/schemas/Pet/properties/age", "required": false},
+  {"kind": "set_enum", "pointer": "/components/schemas/Pet/properties/status", "values": ["available", "pending", "sold"]},
+  {"kind": "add_property", "pointer": "/components/schemas/Owner", "name": "email", "type": "string", "format": "email", "required": true},
+  {"kind": "add_property", "pointer": "/components/schemas/Unused", "name": "flag", "type": "boolean"},
+  {"kind": "remove_property", "pointer": "/components/schemas/Legacy/properties/name"},
+  {"kind": "add_schema", "name": "Tag", "description": "A tag"},
+  {"kind": "add_schema", "name": "Count", "type": "integer"},
+  {"kind": "remove_schema", "name": "Unused"}
+]
