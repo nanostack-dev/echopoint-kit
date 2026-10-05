@@ -22,7 +22,7 @@ func kindAt(tokens []string) objectKind {
 		return kindPathItem
 	case len(tokens) >= 2 && tokens[len(tokens)-2] == "parameters":
 		return kindParameter
-	case len(tokens) >= 2 && tokens[len(tokens)-2] == "responses":
+	case len(tokens) >= 2 && tokens[len(tokens)-2] == responsesKey:
 		return kindResponse
 	}
 	return kindSchema

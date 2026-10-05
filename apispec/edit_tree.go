@@ -14,6 +14,7 @@ import (
 
 const (
 	pathsKey      = "paths"
+	responsesKey  = "responses"
 	componentsKey = "components"
 	schemasKey    = "schemas"
 
@@ -265,7 +266,7 @@ func PropertyPointer(schema string, property ...string) string {
 
 // ResponsePointer is the pointer to a response of an operation.
 func ResponsePointer(method, path, status string) string {
-	return pointerFromTokens([]string{pathsKey, path, strings.ToLower(method), "responses", status})
+	return pointerFromTokens([]string{pathsKey, path, strings.ToLower(method), responsesKey, status})
 }
 
 // ParameterPointer is the pointer to the parameter of an operation with a name
