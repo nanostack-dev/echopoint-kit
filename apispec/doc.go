@@ -7,5 +7,7 @@
 //   - Canonical writes the canonical YAML layout EchoPoint stores and
 //     `spec pull` writes (ADR-0017). LayoutVersion names that layout.
 //   - Compare diffs two documents with oasdiff and computes the version bump.
+//   - Lint reports the nodes that depart from the conventions the document itself follows,
+//     and LintChanges only those a change introduces, judged by the conventions of the base.
 //   - Publish turns a document into the next Live version.
 package apispec
