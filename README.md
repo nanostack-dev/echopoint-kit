@@ -1,5 +1,7 @@
 # echopoint-kit
 
+Contributor and agent guidance: [documentation index](docs/README.md) and [AGENTS.md](AGENTS.md). This repository works as a standalone checkout.
+
 Shared Go packages for [Echopoint](https://echopoint.dev).
 
 ## apispec
