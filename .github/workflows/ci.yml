@@ -6,31 +6,27 @@ on:
     branches:
       - main
 
+# Lint and tests are Dagger checks from official modules (dagger.toml):
+# `dagger check` runs them the same way on a laptop and here. This public
+# repository stays on GitHub-hosted runners, so each run starts a cold engine.
+env:
+  DAGGER_VERSION: v1.0.0-beta.24
+  DAGGER_ENGINE: image://registry.dagger.io/engine:v1.0.0-beta.24
+  DAGGER_NO_NAG: '1'
+
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
-      - name: Setup Go
-        uses: actions/setup-go@v6
-        with:
-          go-version-file: go.mod
-          cache: true
-          cache-dependency-path: go.sum
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v9.3.0
-        with:
-          version: latest
-          args: --timeout 5m --path-mode=abs
-
-      - name: Install gotestsum
+      - name: Install the Dagger CLI
+        run: ./scripts/ci/install-dagger.sh "$RUNNER_TEMP/dagger-bin"
+      - name: Run every check
         run: |
-          go install gotest.tools/gotestsum@v1.13.0
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
-
-      - name: Run tests
-        run: gotestsum --format github-actions -- -race -count=1 -timeout 10m ./...
+          set -euo pipefail
+          export PATH="$RUNNER_TEMP/dagger-bin:$PATH"
+          dagger check --progress=report

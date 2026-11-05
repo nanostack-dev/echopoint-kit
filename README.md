@@ -36,3 +36,7 @@ OpenAPI fields in a fixed order (the order of the OpenAPI Specification; Schema 
 ## License
 
 MIT
+
+## CI
+
+`dagger check` runs lint (`golangci-lint`) and the tests (`go test -race -count=1`) exactly as CI does, from Dagger's official modules (`dagger.toml`). Install the pinned CLI with `./scripts/ci/install-dagger.sh ~/.local/bin` (Docker must run). `dagger check -l --all` lists every check; `dagger check --go-test=TestName` runs one test.
